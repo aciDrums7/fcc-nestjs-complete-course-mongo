@@ -1,0 +1,31 @@
+openapi: 3.0.0
+paths:
+  /api/v1:
+    get:
+      operationId: AppController::getHello
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+info:
+  title: Spotify Clone API
+  description: freeCodeCamp - NestJS Complete Course API
+  version: '1.0'
+  contact: {}
+tags: []
+servers:
+  - url: http://localhost:3000
+components:
+  securitySchemes:
+    bearer:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+      description: Enter JWT token
+      name: JWT
+      in: header
+  schemas: {}

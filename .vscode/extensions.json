@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "firsttris.vscode-jest-runner",
+    "kavod-io.vscode-jest-test-adapter",
+    "tomoki1207.pdf",
+    "dbaeumer.vscode-eslint",
+    "eamodio.gitlens",
+    "oderwat.indent-rainbow",
+    "esbenp.prettier-vscode",
+    "yoavbls.pretty-ts-errors",
+    "mikestead.dotenv",
+    "prisma.prisma"
+  ]
+}

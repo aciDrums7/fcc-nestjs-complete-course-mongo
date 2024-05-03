@@ -1,0 +1,20 @@
+# Git
+.gitignore
+
+# Prettier
+.prettierrc
+.prettierignore
+
+# Husky
+.husky
+
+# Docker
+Dockerfile
+
+# Dotenv
+.env
+.env*
+.env.*
+
+# Misc
+*.pdf
