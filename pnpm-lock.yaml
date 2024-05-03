@@ -2581,10 +2581,10 @@ packages:
         integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==,
       }
 
-  electron-to-chromium@1.4.754:
+  electron-to-chromium@1.4.755:
     resolution:
       {
-        integrity: sha512-7Kr5jUdns5rL/M9wFFmMZAgFDuL2YOnanFH4OI4iFzUqyh3XOL7nAGbSlSMZdzKMIyyTpNSbqZsWG9odwLeKvA==,
+        integrity: sha512-9nop+3jZxSHIxe1EzEUcjDXzK+3qOv3fY5w0sE88nIZUntbv1aXWmoxGWlklX5XSO4txCpLssWkUSh8RQPovBg==,
       }
 
   emittery@0.13.1:
@@ -5539,6 +5539,12 @@ packages:
         integrity: sha512-jQG0cRgJNMZ7aCoiFofnoojeSaa/+KgWaDlfgs8QN+BXoGMpxeMVY5OEnjq4OlNvF3yjftO8c9GRAgcHlO+u7A==,
       }
 
+  swagger-ui-dist@5.17.2:
+    resolution:
+      {
+        integrity: sha512-V/NqUw6QoTrjSpctp2oLQvxrl3vW29UsUtZyq7B1CF0v870KOFbYGDQw8rpKaKm0JxTwHpWnW1SN9YuKZdiCyw==,
+      }
+
   swagger-ui-express@5.0.0:
     resolution:
       {
@@ -7526,7 +7532,7 @@ snapshots:
   browserslist@4.23.0:
     dependencies:
       caniuse-lite: 1.0.30001615
-      electron-to-chromium: 1.4.754
+      electron-to-chromium: 1.4.755
       node-releases: 2.0.14
       update-browserslist-db: 1.0.14(browserslist@4.23.0)
 
@@ -7865,7 +7871,7 @@ snapshots:
 
   ee-first@1.1.1: {}
 
-  electron-to-chromium@1.4.754: {}
+  electron-to-chromium@1.4.755: {}
 
   emittery@0.13.1: {}
 
@@ -9749,10 +9755,12 @@ snapshots:
 
   swagger-ui-dist@5.11.2: {}
 
+  swagger-ui-dist@5.17.2: {}
+
   swagger-ui-express@5.0.0(express@4.19.2):
     dependencies:
       express: 4.19.2
-      swagger-ui-dist: 5.11.2
+      swagger-ui-dist: 5.17.2
 
   symbol-observable@4.0.0: {}
 

@@ -26,7 +26,7 @@ async function bootstrap() {
   });
 
   if (env === 'dev') {
-    await setupDevEnv(app, apiVersion, openapiPath);
+    await setupDevEnv(app, apiVersion, port, openapiPath);
   }
 
   await app.listen(port);
@@ -45,6 +45,7 @@ function loadConfig(configService: ConfigService) {
 async function setupDevEnv(
   app: INestApplication<any>,
   apiVersion: string,
+  port: number,
   openapiPath: string
 ) {
   const argv = parseArgs({
@@ -61,7 +62,7 @@ async function setupDevEnv(
     exit: closeApp,
   } = argv.values;
   const { documentBuilder, openApiOptions, swaggerOptions } =
-    generateOpenapiOptions(apiVersion, false, generateClientApi, false);
+    generateOpenapiOptions(apiVersion, port, false, generateClientApi, false);
 
   await SwaggerModule.loadPluginMetadata(metadata);
   const document = SwaggerModule.createDocument(

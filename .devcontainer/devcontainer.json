@@ -1,44 +1,43 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node-postgres
 {
-  "name": "freeCodeCamp NestJS - Complete Course",
+  "name": "freeCodeCamp NestJS - Complete Course - Mongo",
   "dockerComposeFile": "docker-compose.yml",
   "service": "app",
-  "workspaceMount": "source=${localWorkspaceFolder}/project-mongo,target=/workspaces/fcc-nestjs-mongo,type=bind,consistency=cached",
-  "workspaceFolder": "/workspaces/fcc-nestjs-mongo",
+  "workspaceMount": "source=${localWorkspaceFolder}/project-mongo,target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
-    // "ghcr.io/devcontainers-contrib/features/pnpm:2": {},
-    // "ghcr.io/joshuanianji/devcontainer-features/mount-pnpm-store:1": {},
+    "ghcr.io/devcontainers-contrib/features/pnpm:2": {},
+    "ghcr.io/joshuanianji/devcontainer-features/mount-pnpm-store:1": {},
     "ghcr.io/devcontainers-contrib/features/nestjs-cli:2": {},
     "ghcr.io/devcontainers/features/java:1": {},
-    "ghcr.io/devcontainers-contrib/features/prettier:1": {},
-    "ghcr.io/devcontainers-contrib/features/prisma": {}
+    "ghcr.io/devcontainers-contrib/features/prettier:1": {}
   },
-  // "overrideFeatureInstallOrder": [
-  //   "ghcr.io/devcontainers-contrib/features/pnpm",
-  //   "ghcr.io/joshuanianji/devcontainer-features/mount-pnpm-store"
-  // ],
+  "overrideFeatureInstallOrder": [
+    "ghcr.io/devcontainers-contrib/features/pnpm",
+    "ghcr.io/joshuanianji/devcontainer-features/mount-pnpm-store"
+  ],
   // "mounts": [
-  // 	"source=global-pnpm-store,target=${containerWorkspaceFolder}/.pnpm-store,type=volume"
+  //   "source=${localWorkspaceFolderBasename}-node_modules,target=${containerWorkspaceFolder}/node_modules,type=volume"
   // ],
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // This can be used to network with other containers or with the host.
   "portsAttributes": {
-    "3000": {
+    "3001": {
       "label": "NestJS",
       "onAutoForward": "silent"
     },
-    "5432": {
-      "label": "PostgreSQL",
+    "27017": {
+      "label": "MongoDB",
       "onAutoForward": "silent"
     }
   },
   "forwardPorts": [3001, 27017],
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "npm install -g npm@latest pnpm @openapitools/openapi-generator-cli && pnpm install --offline",
+  "postCreateCommand": "npm install -g npm@latest pnpm @openapitools/openapi-generator-cli && pnpm install"
   // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-  "remoteUser": "node"
+  // "remoteUser": "node"
   // Configure tool-specific properties.
   // "customizations": {},
 }

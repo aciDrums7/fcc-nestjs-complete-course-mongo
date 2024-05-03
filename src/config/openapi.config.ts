@@ -5,21 +5,22 @@ import { OpenApiOptions } from 'nest-openapi-tools';
 //* https://www.npmjs.com/package/nest-openapi-tools
 export function generateOpenapiOptions(
   API_VERSION: string,
+  PORT: number,
   includeManifest: boolean,
   includeClient: boolean,
   startWebServer: boolean
 ) {
   // ? The DocumentBuilder helps to structure a base document that conforms to the OpenAPI Specification
   const documentBuilder: DocumentBuilder = new DocumentBuilder()
-    .setTitle('Spotify Clone API')
+    .setTitle('Spotify Clone API - MongoDB')
     .setDescription('freeCodeCamp - NestJS Complete Course API')
     .setVersion('1.0')
-    .addServer('http://localhost:3000')
+    .addServer(`http://localhost:${PORT}`)
     .addBearerAuth({
       type: 'http',
       description: 'Enter JWT token',
-      name: 'JWT',
-      in: 'header',
+      // name: 'JWT',
+      // in: 'header',
       scheme: 'bearer',
       bearerFormat: 'JWT',
     });
@@ -54,7 +55,7 @@ export function generateOpenapiOptions(
   const swaggerOptions: SwaggerDocumentOptions = {
     // deepScanRoutes: true,
     operationIdFactory: (controllerKey: string, methodKey: string) =>
-      `${controllerKey}::${methodKey}`,
+      `${controllerKey}-${methodKey}`,
   };
 
   // ? https://www.youtube.com/watch?v=11OjFCJoFjo
