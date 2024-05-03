@@ -3,7 +3,7 @@ services:
     container_name: nestjs-app-mongo
     build:
       context: ../
-      dockerfile: Dockerfile
+      dockerfile: .devcontainer/Dockerfile
 
     volumes:
       - ../:/workspaces/fcc-nestjs-mongo:cached
