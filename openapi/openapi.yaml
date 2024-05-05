@@ -2,7 +2,7 @@ openapi: 3.0.0
 paths:
   /api/v1:
     get:
-      operationId: AppController::getHello
+      operationId: AppController-getHello
       parameters: []
       responses:
         '200':
@@ -11,9 +11,11 @@ paths:
             application/json:
               schema:
                 type: string
+      tags:
+        - app
   /api/v1/songs:
     post:
-      operationId: SongsController::create
+      operationId: SongsController-create
       parameters: []
       requestBody:
         required: true
@@ -27,11 +29,11 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-      tags: &a1
+                $ref: '#/components/schemas/FindSongDto'
+      tags:
         - songs
     get:
-      operationId: SongsController::findAll
+      operationId: SongsController-findAll
       parameters: []
       responses:
         '200':
@@ -39,11 +41,14 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-      tags: *a1
+                type: array
+                items:
+                  $ref: '#/components/schemas/FindSongDto'
+      tags:
+        - songs
   /api/v1/songs/{id}:
     get:
-      operationId: SongsController::findOne
+      operationId: SongsController-findOneById
       parameters:
         - name: id
           required: true
@@ -56,10 +61,11 @@ paths:
           content:
             application/json:
               schema:
-                type: string
-      tags: *a1
+                $ref: '#/components/schemas/FindSongDto'
+      tags:
+        - songs
     patch:
-      operationId: SongsController::update
+      operationId: SongsController-update
       parameters:
         - name: id
           required: true
@@ -78,10 +84,93 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-      tags: *a1
+                $ref: '#/components/schemas/FindSongDto'
+      tags:
+        - songs
     delete:
-      operationId: SongsController::remove
+      operationId: SongsController-deleteOneById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+      tags:
+        - songs
+  /api/v1/albums:
+    post:
+      operationId: AlbumsController-create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAlbumDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAlbumDto'
+      tags:
+        - albums
+    get:
+      operationId: AlbumsController-findAll
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FindAlbumDto'
+      tags:
+        - albums
+  /api/v1/albums/{id}:
+    get:
+      operationId: AlbumsController-findOneById
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FindAlbumDto'
+      tags:
+        - albums
+    patch:
+      operationId: AlbumsController-update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAlbumDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateAlbumDto'
+      tags:
+        - albums
+    delete:
+      operationId: AlbumsController-remove
       parameters:
         - name: id
           required: true
@@ -95,7 +184,8 @@ paths:
             application/json:
               schema:
                 type: string
-      tags: *a1
+      tags:
+        - albums
 info:
   title: Spotify Clone API - MongoDB
   description: freeCodeCamp - NestJS Complete Course API
@@ -125,7 +215,31 @@ components:
           type: string
         lyrics:
           type: string
+        album:
+          type: string
       required:
+        - title
+        - releasedDate
+        - duration
+        - lyrics
+        - album
+    FindSongDto:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        releasedDate:
+          format: date-time
+          type: string
+        duration:
+          format: date-time
+          type: string
+        lyrics:
+          type: string
+      required:
+        - id
         - title
         - releasedDate
         - duration
@@ -143,3 +257,73 @@ components:
           type: string
         lyrics:
           type: string
+        album:
+          type: string
+    CreateAlbumDto:
+      type: object
+      properties:
+        title:
+          type: string
+        songs:
+          type: array
+          items:
+            type: string
+      required:
+        - title
+        - songs
+    Album:
+      type: object
+      properties:
+        title:
+          type: string
+        songs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+      required:
+        - title
+        - songs
+    Song:
+      type: object
+      properties:
+        title:
+          type: string
+        releasedDate:
+          format: date-time
+          type: string
+        duration:
+          type: string
+        lyrics:
+          type: string
+        album:
+          $ref: '#/components/schemas/Album'
+      required:
+        - title
+        - releasedDate
+        - duration
+        - lyrics
+        - album
+    FindAlbumDto:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        songs:
+          type: array
+          items:
+            $ref: '#/components/schemas/Song'
+      required:
+        - id
+        - title
+        - songs
+    UpdateAlbumDto:
+      type: object
+      properties:
+        title:
+          type: string
+        songs:
+          type: array
+          items:
+            type: string

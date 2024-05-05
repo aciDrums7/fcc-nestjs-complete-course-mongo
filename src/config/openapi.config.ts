@@ -3,9 +3,10 @@ import { OpenApiOptions } from 'nest-openapi-tools';
 
 //* https://medium.com/@christianinyekaka/step-by-step-guide-adding-openapi-documentation-to-your-nestjs-api-c210754ad905
 //* https://www.npmjs.com/package/nest-openapi-tools
-export function generateOpenapiOptions(
-  API_VERSION: string,
-  PORT: number,
+export function getOpenAPIConfigs(
+  apiVersion: string,
+  port: number,
+  openapiPath: string,
   includeManifest: boolean,
   includeClient: boolean,
   startWebServer: boolean
@@ -15,7 +16,7 @@ export function generateOpenapiOptions(
     .setTitle('Spotify Clone API - MongoDB')
     .setDescription('freeCodeCamp - NestJS Complete Course API')
     .setVersion('1.0')
-    .addServer(`http://localhost:${PORT}`)
+    .addServer(`http://localhost:${port}`)
     .addBearerAuth({
       type: 'http',
       description: 'Enter JWT token',
@@ -28,11 +29,11 @@ export function generateOpenapiOptions(
   const openApiOptions: OpenApiOptions = {
     webServerOptions: {
       enabled: startWebServer,
-      path: `api-docs/${API_VERSION}`,
+      path: `api-docs/${apiVersion}`,
     },
     fileGeneratorOptions: {
       enabled: includeManifest,
-      outputFilePath: 'openapi/openapi.yaml', // or ./openapi.json
+      outputFilePath: `${openapiPath}/openapi.yaml`, // or ./openapi.json
     },
     clientGeneratorOptions: {
       enabled: includeClient,
@@ -47,7 +48,7 @@ export function generateOpenapiOptions(
         'stringEnums=true',
         'enablePostProcessFile=true',
       ].join(','),
-      openApiFilePath: 'openapi/openapi.yaml', // or ./openapi.json
+      openApiFilePath: `${openapiPath}/openapi.yaml`, // or ./openapi.json
       // skipValidation: false, // optional, false by default
     },
   };
