@@ -8,6 +8,7 @@ import { validate } from './common/validators/env.validator';
 import { envConfig } from './config/env.config';
 import { AlbumsModule } from './resources/albums/albums.module';
 import { SongsModule } from './resources/songs/songs.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { SongsModule } from './resources/songs/songs.module';
     }),
     SongsModule,
     AlbumsModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],

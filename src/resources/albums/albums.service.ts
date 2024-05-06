@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import { Model, QueryWithHelpers } from 'mongoose';
@@ -46,7 +46,7 @@ export class AlbumsService {
     const album = await this.albumModel
       .findById(id)
       .populate('songs', null, Song.name)
-      .orFail();
+      .orFail(() => new NotFoundException(`Album with id ${id} not found`));
     const albumObj = plainToInstance(FindAlbumDto, album, {
       enableCircularCheck: true,
     });
@@ -63,7 +63,7 @@ export class AlbumsService {
   ): Promise<FindAlbumDto> {
     const album = await this.albumModel
       .findByIdAndUpdate(id, updateAlbumDto, { new: true })
-      .orFail();
+      .orFail(() => new NotFoundException(`Album with id ${id} not found`));
     return plainToInstance(FindAlbumDto, album, {
       enableCircularCheck: true,
     });
@@ -72,7 +72,9 @@ export class AlbumsService {
   async deleteOneById(
     id: string
   ): Promise<QueryWithHelpers<any, AlbumDocument>> {
-    const deleteResult = await this.albumModel.deleteOne({ _id: id }).orFail();
+    const deleteResult = await this.albumModel
+      .deleteOne({ _id: id })
+      .orFail(() => new NotFoundException(`Album with id ${id} not found`));
     return deleteResult;
   }
 }
