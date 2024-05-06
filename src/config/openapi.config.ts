@@ -56,7 +56,8 @@ export function getOpenAPIConfigs(
   const swaggerOptions: SwaggerDocumentOptions = {
     // deepScanRoutes: true,
     operationIdFactory: (controllerKey: string, methodKey: string) =>
-      `${controllerKey}-${methodKey}`,
+      // `${controllerKey}-${methodKey}`,
+      methodKey,
   };
 
   // ? https://www.youtube.com/watch?v=11OjFCJoFjo

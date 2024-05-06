@@ -13,7 +13,7 @@ export class FindSongDto {
   releasedDate: Date;
 
   @Expose()
-  duration: Date;
+  duration: string;
 
   @Expose()
   lyrics: string;

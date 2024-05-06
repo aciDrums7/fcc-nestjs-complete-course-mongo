@@ -15,7 +15,7 @@ export class AlbumsService {
     @InjectModel(Album.name) private readonly albumModel: Model<AlbumDocument>
   ) {}
 
-  async create(createAlbumDto: CreateAlbumDto): Promise<FindAlbumDto> {
+  async createAlbum(createAlbumDto: CreateAlbumDto): Promise<FindAlbumDto> {
     const album = await this.albumModel.create(createAlbumDto);
     return plainToInstance(FindAlbumDto, album, {
       enableCircularCheck: true,
@@ -26,7 +26,8 @@ export class AlbumsService {
   //? album. Utilizing this feature in NestJS effectively allows for eager loading of related entities, which
   //? streamlines data retrieval processes. It is considered a good practice to carefully manage such
   //? operations to optimize query performance and maintain data integrity
-  async findAll(): Promise<FindAlbumDto[]> {
+
+  async findAllAlbums(): Promise<FindAlbumDto[]> {
     const albums = await this.albumModel
       .find()
       .populate('songs', null, Song.name);
@@ -42,7 +43,7 @@ export class AlbumsService {
     });
   }
 
-  async findOneById(id: string): Promise<FindAlbumDto> {
+  async findAlbumById(id: string): Promise<FindAlbumDto> {
     const album = await this.albumModel
       .findById(id)
       .populate('songs', null, Song.name)
@@ -57,7 +58,7 @@ export class AlbumsService {
     return albumObj;
   }
 
-  async updateOneById(
+  async updateAlbumById(
     id: string,
     updateAlbumDto: UpdateAlbumDto
   ): Promise<FindAlbumDto> {
@@ -69,7 +70,7 @@ export class AlbumsService {
     });
   }
 
-  async deleteOneById(
+  async deleteAlbumById(
     id: string
   ): Promise<QueryWithHelpers<any, AlbumDocument>> {
     const deleteResult = await this.albumModel

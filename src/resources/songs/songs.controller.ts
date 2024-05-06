@@ -19,30 +19,30 @@ export class SongsController {
   constructor(private readonly songsService: SongsService) {}
 
   @Post()
-  create(@Body() createSongDto: CreateSongDto) {
-    return this.songsService.create(createSongDto);
+  createSong(@Body() createSongDto: CreateSongDto) {
+    return this.songsService.createSong(createSongDto);
   }
 
   @Get()
-  findAll() {
-    return this.songsService.findAll();
+  findAllSongs() {
+    return this.songsService.findAllSongs();
   }
 
   @Get(':id')
-  findOneById(@Param('id', MongoObjectIdPipe) id: string) {
-    return this.songsService.findOneById(id);
+  findSongById(@Param('id', MongoObjectIdPipe) id: string) {
+    return this.songsService.findSongById(id);
   }
 
   @Patch(':id')
-  update(
+  updateSongById(
     @Param('id', MongoObjectIdPipe) id: string,
     @Body() updateSongDto: UpdateSongDto
   ) {
-    return this.songsService.update(id, updateSongDto);
+    return this.songsService.updateSongById(id, updateSongDto);
   }
 
   @Delete(':id')
-  deleteOneById(@Param('id', MongoObjectIdPipe) id: string) {
-    return this.songsService.deleteOneById(id);
+  deleteSongById(@Param('id', MongoObjectIdPipe) id: string) {
+    return this.songsService.deleteSongById(id);
   }
 }

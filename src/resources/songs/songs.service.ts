@@ -15,14 +15,14 @@ export class SongsService {
     @InjectModel(Song.name) private readonly songModel: Model<SongDocument>
   ) {}
 
-  async create(createSongDto: CreateSongDto): Promise<FindSongDto> {
+  async createSong(createSongDto: CreateSongDto): Promise<FindSongDto> {
     const song = await this.songModel.create(createSongDto);
     return plainToInstance(FindSongDto, song, {
       enableCircularCheck: true,
     });
   }
 
-  async findAll(): Promise<FindSongDto[]> {
+  async findAllSongs(): Promise<FindSongDto[]> {
     const songs = await this.songModel
       .find()
       .populate('album', null, Album.name);
@@ -38,7 +38,7 @@ export class SongsService {
     return songsObj;
   }
 
-  async findOneById(id: string): Promise<FindSongDto> {
+  async findSongById(id: string): Promise<FindSongDto> {
     const song = await this.songModel
       .findById(id)
       .populate('album', null, Album.name)
@@ -53,7 +53,10 @@ export class SongsService {
     return songObj;
   }
 
-  async update(id: string, updateSongDto: UpdateSongDto): Promise<FindSongDto> {
+  async updateSongById(
+    id: string,
+    updateSongDto: UpdateSongDto
+  ): Promise<FindSongDto> {
     const song = await this.songModel
       .findByIdAndUpdate(id, updateSongDto, { new: true })
       .orFail(() => new NotFoundException(`Song with id ${id} not found`));
@@ -62,7 +65,7 @@ export class SongsService {
     });
   }
 
-  async deleteOneById(
+  async deleteSongById(
     id: string
   ): Promise<QueryWithHelpers<any, SongDocument>> {
     const deleteResult = await this.songModel.deleteOne({ _id: id }).orFail();

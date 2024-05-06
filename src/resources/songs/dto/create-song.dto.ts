@@ -18,7 +18,7 @@ export class CreateSongDto {
 
   @IsNotEmpty()
   @IsMilitaryTime()
-  duration: Date;
+  duration: string;
 
   @IsNotEmpty()
   @IsString()

@@ -19,30 +19,30 @@ export class AlbumsController {
   constructor(private readonly albumsService: AlbumsService) {}
 
   @Post()
-  create(@Body() createAlbumDto: CreateAlbumDto) {
-    return this.albumsService.create(createAlbumDto);
+  createAlbum(@Body() createAlbumDto: CreateAlbumDto) {
+    return this.albumsService.createAlbum(createAlbumDto);
   }
 
   @Get()
-  findAll() {
-    return this.albumsService.findAll();
+  findAllAlbums() {
+    return this.albumsService.findAllAlbums();
   }
 
   @Get(':id')
-  findOneById(@Param('id', MongoObjectIdPipe) id: string) {
-    return this.albumsService.findOneById(id);
+  findAlbumById(@Param('id', MongoObjectIdPipe) id: string) {
+    return this.albumsService.findAlbumById(id);
   }
 
   @Patch(':id')
-  update(
+  updateAlbumById(
     @Param('id', MongoObjectIdPipe) id: string,
     @Body() updateAlbumDto: UpdateAlbumDto
   ) {
-    return this.albumsService.updateOneById(id, updateAlbumDto);
+    return this.albumsService.updateAlbumById(id, updateAlbumDto);
   }
 
   @Delete(':id')
-  remove(@Param('id', MongoObjectIdPipe) id: string) {
-    return this.albumsService.deleteOneById(id);
+  deleteAlbumById(@Param('id', MongoObjectIdPipe) id: string) {
+    return this.albumsService.deleteAlbumById(id);
   }
 }
