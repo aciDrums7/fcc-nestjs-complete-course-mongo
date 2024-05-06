@@ -48,6 +48,9 @@ class EnvironmentVariables {
   DB_PASSWORD: string;
 
   @IsString()
+  DB_URL: string;
+
+  @IsString()
   OPENAPI_PATH: string;
 
   @IsString()

@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { validate } from './common/validators/env.validation';
+import { validate } from './common/validators/env.validator';
 import { envConfig } from './config/env.config';
 import { AlbumsModule } from './resources/albums/albums.module';
 import { SongsModule } from './resources/songs/songs.module';
@@ -12,13 +12,16 @@ import { SongsModule } from './resources/songs/songs.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: [`${process.cwd()}/.env.${process.env.NODE_ENV}`],
+      envFilePath: [`.env`],
       load: [envConfig],
       validate: validate,
     }),
-    MongooseModule.forRoot(
-      'mongodb://mongo:mongo@localhost:27017/spotify-clone?authSource=admin'
-    ),
+    MongooseModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        uri: `${configService.get<string>('db.url')}`,
+      }),
+    }),
     SongsModule,
     AlbumsModule,
   ],
