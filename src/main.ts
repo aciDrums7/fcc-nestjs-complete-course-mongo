@@ -11,13 +11,15 @@ function loadConfig(configService: ConfigService) {
     port: configService.get<number>('port'),
     apiVersion: configService.get<string>('apiVersion'),
     openapiPath: configService.get<string>('openapiPath'),
+    appUrl: configService.get<string>('appUrl'),
   };
 }
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const { port, apiVersion, openapiPath, env } = loadConfig(configService);
+  const { port, apiVersion, openapiPath, env, appUrl } =
+    loadConfig(configService);
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -35,7 +37,7 @@ async function bootstrap() {
   }
 
   await app.listen(port);
-  Logger.log(`Application is running on: http://localhost:${port}`);
+  Logger.log(`Application is running on: ${appUrl}`);
 }
 
 bootstrap();

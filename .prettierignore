@@ -25,3 +25,6 @@ openapi.yaml
 
 # Railway
 railway.toml
+
+# SWC
+metadata.ts
