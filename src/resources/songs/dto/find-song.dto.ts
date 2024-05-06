@@ -1,9 +1,9 @@
-import { Exclude, Expose, Transform } from 'class-transformer';
+import { Exclude, Expose } from 'class-transformer';
+import { FindAlbumDto } from 'src/resources/albums/dto/find-album.dto';
 
 @Exclude()
 export class FindSongDto {
   @Expose()
-  @Transform(({ obj }) => obj._id)
   id: string;
 
   @Expose()
@@ -17,4 +17,7 @@ export class FindSongDto {
 
   @Expose()
   lyrics: string;
+
+  @Expose()
+  album: FindAlbumDto;
 }

@@ -5,8 +5,8 @@ paths:
       operationId: AppController-getHello
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -22,28 +22,28 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateSongDto'
+              $ref: "#/components/schemas/CreateSongDto"
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FindSongDto'
+                $ref: "#/components/schemas/FindSongDto"
       tags:
         - songs
     get:
       operationId: SongsController-findAll
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FindSongDto'
+                  $ref: "#/components/schemas/FindSongDto"
       tags:
         - songs
   /api/v1/songs/{id}:
@@ -56,12 +56,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FindSongDto'
+                $ref: "#/components/schemas/FindSongDto"
       tags:
         - songs
     patch:
@@ -77,14 +77,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateSongDto'
+              $ref: "#/components/schemas/UpdateSongDto"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FindSongDto'
+                $ref: "#/components/schemas/FindSongDto"
       tags:
         - songs
     delete:
@@ -96,8 +96,8 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
       tags:
         - songs
   /api/v1/albums:
@@ -109,41 +109,46 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateAlbumDto'
+              $ref: "#/components/schemas/CreateAlbumDto"
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FindAlbumDto'
+                $ref: "#/components/schemas/FindAlbumDto"
       tags:
         - albums
     get:
       operationId: AlbumsController-findAll
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/FindAlbumDto'
+                  $ref: "#/components/schemas/FindAlbumDto"
       tags:
         - albums
   /api/v1/albums/{id}:
     get:
       operationId: AlbumsController-findOneById
-      parameters: []
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/FindAlbumDto'
+                $ref: "#/components/schemas/FindAlbumDto"
       tags:
         - albums
     patch:
@@ -159,14 +164,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateAlbumDto'
+              $ref: "#/components/schemas/UpdateAlbumDto"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UpdateAlbumDto'
+                $ref: "#/components/schemas/UpdateAlbumDto"
       tags:
         - albums
     delete:
@@ -178,8 +183,8 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
@@ -189,7 +194,7 @@ paths:
 info:
   title: Spotify Clone API - MongoDB
   description: freeCodeCamp - NestJS Complete Course API
-  version: '1.0'
+  version: "1.0"
   contact: {}
 tags: []
 servers:
@@ -279,7 +284,7 @@ components:
         songs:
           type: array
           items:
-            $ref: '#/components/schemas/Song'
+            $ref: "#/components/schemas/Song"
       required:
         - title
         - songs
@@ -296,7 +301,7 @@ components:
         lyrics:
           type: string
         album:
-          $ref: '#/components/schemas/Album'
+          $ref: "#/components/schemas/Album"
       required:
         - title
         - releasedDate
@@ -313,7 +318,7 @@ components:
         songs:
           type: array
           items:
-            $ref: '#/components/schemas/Song'
+            $ref: "#/components/schemas/Song"
       required:
         - id
         - title

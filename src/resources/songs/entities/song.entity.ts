@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { Album } from 'src/resources/albums/entities/album.entity';
 
 //? The SongDocument is utilized upon injecting the Model into the SongService. It is a
 //? NestJS-specific approach to apply TypeScript interfaces for Mongoose models, promoting
@@ -31,6 +32,12 @@ export class Song {
     required: false,
   })
   lyrics: string;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Album',
+  })
+  album: Album;
 }
 
 //? SchemaFactory is tasked with generating the bare schema definition. Employing

@@ -16,5 +16,9 @@ Dockerfile
 .env*
 .env.*
 
+# Openapi
+openapi/**
+openapi.yaml
+
 # Misc
 *.pdf

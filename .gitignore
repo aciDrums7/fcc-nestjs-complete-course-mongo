@@ -60,3 +60,9 @@ openapi/typescript-axios-api-client
 
 # SWC Compiler
 metadata.ts
+
+# MongoDB
+queries.js
+
+# Madge
+*.png

@@ -1,11 +1,9 @@
-import {
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import { Model, QueryWithHelpers } from 'mongoose';
+import { FindAlbumDto } from '../albums/dto/find-album.dto';
+import { Album } from '../albums/entities/album.entity';
 import { CreateSongDto } from './dto/create-song.dto';
 import { FindSongDto } from './dto/find-song.dto';
 import { UpdateSongDto } from './dto/update-song.dto';
@@ -18,47 +16,56 @@ export class SongsService {
   ) {}
 
   async create(createSongDto: CreateSongDto): Promise<FindSongDto> {
-    try {
-      const song = await this.songModel.create(createSongDto);
-      return plainToInstance(FindSongDto, song.toObject());
-    } catch (err) {
-      throw new InternalServerErrorException(err);
-    }
+    const song = await this.songModel.create(createSongDto);
+    return plainToInstance(FindSongDto, song, {
+      enableCircularCheck: true,
+    });
   }
 
   async findAll(): Promise<FindSongDto[]> {
-    const songs = await this.songModel.find();
-    return songs.map((song) => plainToInstance(FindSongDto, song.toObject()));
+    const songs = await this.songModel
+      .find()
+      .populate('album', null, Album.name);
+    const songsObj = plainToInstance(FindSongDto, songs, {
+      enableCircularCheck: true,
+    });
+    songsObj.forEach((song) => {
+      song.album = plainToInstance(FindAlbumDto, song.album, {
+        enableCircularCheck: true,
+        excludePrefixes: ['songs'],
+      });
+    });
+    return songsObj;
   }
 
   async findOneById(id: string): Promise<FindSongDto> {
-    try {
-      const song = await this.songModel.findById(id).orFail();
-      return plainToInstance(FindSongDto, song.toObject());
-    } catch (err) {
-      throw new NotFoundException(`Song with id ${id} not found`);
-    }
+    const song = await this.songModel
+      .findById(id)
+      .populate('album', null, Album.name)
+      .orFail();
+    const songObj = plainToInstance(FindSongDto, song, {
+      enableCircularCheck: true,
+    });
+    songObj.album = plainToInstance(FindAlbumDto, songObj.album, {
+      enableCircularCheck: true,
+      excludePrefixes: ['songs'],
+    });
+    return songObj;
   }
 
   async update(id: string, updateSongDto: UpdateSongDto): Promise<FindSongDto> {
-    try {
-      const song = await this.songModel
-        .findByIdAndUpdate(id, updateSongDto, { new: true })
-        .orFail();
-      return plainToInstance(FindSongDto, song.toObject());
-    } catch (error) {
-      throw new NotFoundException(`Song with id ${id} not found`);
-    }
+    const song = await this.songModel
+      .findByIdAndUpdate(id, updateSongDto, { new: true })
+      .orFail();
+    return plainToInstance(FindSongDto, song, {
+      enableCircularCheck: true,
+    });
   }
 
   async deleteOneById(
     id: string
   ): Promise<QueryWithHelpers<any, SongDocument>> {
-    try {
-      const deleteResult = await this.songModel.deleteOne({ _id: id }).orFail();
-      return deleteResult;
-    } catch (err) {
-      throw new NotFoundException(`Song with id ${id} not found`);
-    }
+    const deleteResult = await this.songModel.deleteOne({ _id: id }).orFail();
+    return deleteResult;
   }
 }
