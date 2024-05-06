@@ -33,6 +33,7 @@ class EnvironmentVariables {
   DB_URL: string;
 
   @IsString()
+  @IsOptional()
   OPENAPI_PATH: string;
 
   @IsString()
