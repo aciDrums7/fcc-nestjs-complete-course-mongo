@@ -30,24 +30,6 @@ class EnvironmentVariables {
   JWT_EXPIRATION_TIME: string;
 
   @IsString()
-  DB_TYPE: string;
-
-  @IsString()
-  DB_HOST: string;
-
-  @IsNumber()
-  DB_PORT: number;
-
-  @IsString()
-  DB_NAME: string;
-
-  @IsString()
-  DB_USERNAME: string;
-
-  @IsString()
-  DB_PASSWORD: string;
-
-  @IsString()
   DB_URL: string;
 
   @IsString()
