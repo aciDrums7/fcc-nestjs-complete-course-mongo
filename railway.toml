@@ -1,0 +1,6 @@
+[build]
+watchPatterns = ["src/**"]
+
+[build.nixpacksPlan.phases.install]
+dependsOn = ["setup"]
+cmds = ["cd ../.. && pnpm i --no-frozen-lockfile"]

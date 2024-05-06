@@ -22,3 +22,6 @@ openapi.yaml
 
 # Misc
 *.pdf
+
+# Railway
+railway.toml

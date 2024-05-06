@@ -9,6 +9,7 @@
     "esbenp.prettier-vscode",
     "yoavbls.pretty-ts-errors",
     "mikestead.dotenv",
-    "prisma.prisma"
+    "prisma.prisma",
+    "tamasfe.even-better-toml"
   ]
 }

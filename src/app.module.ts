@@ -12,7 +12,7 @@ import { SongsModule } from './resources/songs/songs.module';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: ['.env.dev' /* , '.env.prod' */],
+      envFilePath: [`${process.cwd()}/.env.${process.env.NODE_ENV}`],
       load: [envConfig],
       validate: validate,
     }),
