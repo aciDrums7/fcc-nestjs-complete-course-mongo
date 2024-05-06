@@ -1,5 +1,6 @@
 [build]
 watchPatterns = ["src/**"]
+buildCommand = "pnpm run build"
 
 [build.nixpacksPlan.phases.install]
 dependsOn = ["setup"]
