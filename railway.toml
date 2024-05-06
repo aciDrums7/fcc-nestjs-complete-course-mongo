@@ -3,4 +3,4 @@ buildCommand = "pnpm run build"
 
 [build.nixpacksPlan.phases.install]
 dependsOn = ["setup"]
-cmds = ["cd ../.. && pnpm i --no-frozen-lockfile"]
+cmds = ["pnpm i --no-frozen-lockfile"]
