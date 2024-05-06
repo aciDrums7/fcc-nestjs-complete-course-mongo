@@ -58,9 +58,6 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 # OpenAPI client
 openapi/typescript-axios-api-client
 
-# SWC Compiler
-metadata.ts
-
 # MongoDB
 queries.js
 
