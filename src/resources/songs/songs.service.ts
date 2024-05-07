@@ -2,11 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import { Model, QueryWithHelpers } from 'mongoose';
-import { FindAlbumDto } from '../albums/dto/find-album.dto';
+import { FindAlbumDto } from '../albums/dtos/find-album.dto';
 import { Album } from '../albums/entities/album.entity';
-import { CreateSongDto } from './dto/create-song.dto';
-import { FindSongDto } from './dto/find-song.dto';
-import { UpdateSongDto } from './dto/update-song.dto';
+import { CreateSongDto } from './dtos/create-song.dto';
+import { FindSongDto } from './dtos/find-song.dto';
+import { UpdateSongDto } from './dtos/update-song.dto';
 import { Song, SongDocument } from './entities/song.entity';
 
 @Injectable()
@@ -68,7 +68,9 @@ export class SongsService {
   async deleteSongById(
     id: string
   ): Promise<QueryWithHelpers<any, SongDocument>> {
-    const deleteResult = await this.songModel.deleteOne({ _id: id }).orFail();
+    const deleteResult = await this.songModel
+      .deleteOne({ _id: id })
+      .orFail(() => new NotFoundException(`Song with id ${id} not found`));
     return deleteResult;
   }
 }

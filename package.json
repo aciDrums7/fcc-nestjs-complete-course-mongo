@@ -86,7 +86,7 @@
       ]
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "**/*.(controller|service|module|filter|pipes).ts"
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"

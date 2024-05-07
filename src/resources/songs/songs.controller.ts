@@ -8,8 +8,8 @@ import {
   Post,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateSongDto } from './dto/create-song.dto';
-import { UpdateSongDto } from './dto/update-song.dto';
+import { CreateSongDto } from './dtos/create-song.dto';
+import { UpdateSongDto } from './dtos/update-song.dto';
 import { SongsService } from './songs.service';
 import { MongoObjectIdPipe } from 'src/common/pipes/mongo-object-id/mongo-object-id.pipe';
 

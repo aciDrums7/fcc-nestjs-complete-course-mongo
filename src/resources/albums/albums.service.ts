@@ -2,11 +2,11 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { plainToInstance } from 'class-transformer';
 import { Model, QueryWithHelpers } from 'mongoose';
-import { FindSongDto } from '../songs/dto/find-song.dto';
+import { FindSongDto } from '../songs/dtos/find-song.dto';
 import { Song } from '../songs/entities/song.entity';
-import { CreateAlbumDto } from './dto/create-album.dto';
-import { FindAlbumDto } from './dto/find-album.dto';
-import { UpdateAlbumDto } from './dto/update-album.dto';
+import { CreateAlbumDto } from './dtos/create-album.dto';
+import { FindAlbumDto } from './dtos/find-album.dto';
+import { UpdateAlbumDto } from './dtos/update-album.dto';
 import { Album, AlbumDocument } from './entities/album.entity';
 
 @Injectable()

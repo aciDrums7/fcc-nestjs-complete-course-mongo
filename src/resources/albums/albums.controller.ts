@@ -9,8 +9,8 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AlbumsService } from './albums.service';
-import { CreateAlbumDto } from './dto/create-album.dto';
-import { UpdateAlbumDto } from './dto/update-album.dto';
+import { CreateAlbumDto } from './dtos/create-album.dto';
+import { UpdateAlbumDto } from './dtos/update-album.dto';
 import { MongoObjectIdPipe } from 'src/common/pipes/mongo-object-id/mongo-object-id.pipe';
 
 @ApiTags('albums')

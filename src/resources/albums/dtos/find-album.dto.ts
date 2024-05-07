@@ -1,5 +1,5 @@
 import { Exclude, Expose, Transform } from 'class-transformer';
-import { FindSongDto } from 'src/resources/songs/dto/find-song.dto';
+import { FindSongDto } from 'src/resources/songs/dtos/find-song.dto';
 
 @Exclude()
 export class FindAlbumDto {
