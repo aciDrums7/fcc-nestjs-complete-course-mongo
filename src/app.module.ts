@@ -9,6 +9,7 @@ import { envConfig } from './config/env.config';
 import { AlbumsModule } from './resources/albums/albums.module';
 import { SongsModule } from './resources/songs/songs.module';
 import { CommonModule } from './common/common.module';
+import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { CommonModule } from './common/common.module';
     SongsModule,
     AlbumsModule,
     CommonModule,
+    EventsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

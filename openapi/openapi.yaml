@@ -33,6 +33,10 @@ paths:
                 $ref: "#/components/schemas/FindSongDto"
         "404":
           description: Song not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AllExceptionsResponseDto"
       tags:
         - songs
     get:
@@ -263,6 +267,25 @@ components:
         - id
         - title
         - songs
+    AllExceptionsResponseDto:
+      type: object
+      properties:
+        message:
+          type: object
+        name:
+          type: object
+        path:
+          type: object
+        statusCode:
+          type: number
+        timestamp:
+          type: string
+      required:
+        - message
+        - name
+        - path
+        - statusCode
+        - timestamp
     UpdateSongDto:
       type: object
       properties:
