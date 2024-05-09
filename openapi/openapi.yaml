@@ -13,6 +13,24 @@ paths:
                 type: string
       tags:
         - app
+  /api/v1/external-api-rxjs:
+    get:
+      operationId: getObservable
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - app
+  /api/v1/external-api-promise:
+    get:
+      operationId: getPromise
+      parameters: []
+      responses:
+        "200":
+          description: ""
+      tags:
+        - app
   /api/v1/songs:
     post:
       operationId: createSong

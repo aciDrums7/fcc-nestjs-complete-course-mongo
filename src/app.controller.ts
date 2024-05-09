@@ -2,7 +2,7 @@ import { HttpService } from '@nestjs/axios';
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AxiosResponse } from 'axios';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { AppService } from './app.service';
 
 @Controller()
@@ -21,7 +21,9 @@ export class AppController {
   @Get('/external-api-rxjs')
   getObservable(): Observable<AxiosResponse<any>> {
     //? All HttpService methods return an AxiosResponse wrapped in an Observable object.
-    return this.httpService.get('https://jsonplaceholder.typicode.com/todos/1');
+    return this.httpService
+      .get('https://jsonplaceholder.typicode.com/todos')
+      .pipe(map((res) => res.data));
   }
 
   @Get('/external-api-promise')
@@ -29,8 +31,9 @@ export class AppController {
     //? If you think that HttpModule.register's options are not enough for you
     //? or if you just want to access the underlying Axios instance created
     //? by @nestjs/axios, you can access it via HttpService#axiosRef as follows:
-    return this.httpService.axiosRef.get(
-      'https://jsonplaceholder.typicode.com/todos/1'
-    );
+    return this.httpService.axiosRef
+      .get('https://jsonplaceholder.typicode.com/todos')
+      .then((res) => res.data)
+      .catch((err) => err);
   }
 }
