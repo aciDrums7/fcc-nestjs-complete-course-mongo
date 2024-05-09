@@ -4,14 +4,14 @@ import {
   Delete,
   Get,
   Param,
-  Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { MongoObjectIdPipe } from 'src/common/pipes/mongo-object-id/mongo-object-id.pipe';
 import { AlbumsService } from './albums.service';
 import { CreateAlbumDto } from './dtos/create-album.dto';
 import { UpdateAlbumDto } from './dtos/update-album.dto';
-import { MongoObjectIdPipe } from 'src/common/pipes/mongo-object-id/mongo-object-id.pipe';
 
 @ApiTags('albums')
 @Controller('albums')
@@ -33,7 +33,7 @@ export class AlbumsController {
     return this.albumsService.findAlbumById(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   updateAlbumById(
     @Param('id', MongoObjectIdPipe) id: string,
     @Body() updateAlbumDto: UpdateAlbumDto

@@ -1,12 +1,13 @@
+import { NotFoundException } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateSongDto } from '../dtos/create-song.dto';
 import { FindSongDto } from '../dtos/find-song.dto';
-import { UpdateSongDto } from '../dtos/update-song.dto';
 import { Song } from '../entities/song.entity';
 import { SongsService } from '../songs.service';
-import { SongsModelMock, findSongDto, songId } from './mocks/songs.model.mock';
-import { NotFoundException } from '@nestjs/common';
+import { createSongDtoMock } from './mocks/dtos/create-song.dto.mock';
+import { findSongDtoMock, songId } from './mocks/dtos/find-song.dto.mock';
+import { SongsModelMock } from './mocks/songs.model.mock';
+import { updateSongDtoMock } from './mocks/dtos/update-song.dto.mock';
 
 describe('SongsService', () => {
   let service: SongsService;
@@ -31,22 +32,14 @@ describe('SongsService', () => {
   });
 
   describe('createSong', () => {
-    const createSongDto: CreateSongDto = {
-      title: 'Pneuma',
-      releasedDate: new Date('2023-05-02T00:00:00.000Z'),
-      duration: '05:45',
-      lyrics: 'Yellow',
-      album: '',
-    };
-
     it('should create a song and return it', async () => {
       const repoSpy = jest.spyOn(service, 'createSong');
 
-      const result = await service.createSong(createSongDto);
+      const result = await service.createSong(createSongDtoMock);
 
-      expect(repoSpy).toHaveBeenCalledWith(createSongDto);
+      expect(repoSpy).toHaveBeenCalledWith(createSongDtoMock);
       expect(repoSpy).toHaveBeenCalledTimes(1);
-      expect(result).toEqual<FindSongDto>(findSongDto);
+      expect(result).toEqual<FindSongDto>(findSongDtoMock);
     });
 
     it('should throw a NotFoundException if the song does not exist', () => {
@@ -66,7 +59,7 @@ describe('SongsService', () => {
 
       expect(repoSpy).toHaveBeenCalled();
       expect(repoSpy).toHaveBeenCalledTimes(1);
-      expect(result).toEqual<FindSongDto[]>([findSongDto]);
+      expect(result).toEqual<FindSongDto[]>([findSongDtoMock]);
     });
 
     it('should throw a NotFoundException if the song does not exist', () => {
@@ -86,7 +79,7 @@ describe('SongsService', () => {
 
       expect(repoSpy).toHaveBeenCalledWith(songId);
       expect(repoSpy).toHaveBeenCalledTimes(1);
-      expect(result).toEqual<FindSongDto>(findSongDto);
+      expect(result).toEqual<FindSongDto>(findSongDtoMock);
     });
 
     it('should throw a NotFoundException if the song does not exist', () => {
@@ -99,22 +92,18 @@ describe('SongsService', () => {
   });
 
   describe('updateSongById', () => {
-    const updateSongDto: UpdateSongDto = {
-      lyrics: 'Test lyrics',
-      album: '6637bcd1aef769fc1760cd8b',
-    };
     it('should update a song and return it', async () => {
       const repoSpy = jest.spyOn(service, 'updateSongById');
 
-      const result = await service.updateSongById(songId, updateSongDto);
+      const result = await service.updateSongById(songId, updateSongDtoMock);
 
-      expect(repoSpy).toHaveBeenCalledWith(songId, updateSongDto);
+      expect(repoSpy).toHaveBeenCalledWith(songId, updateSongDtoMock);
       expect(repoSpy).toHaveBeenCalledTimes(1);
       expect(result).toEqual<FindSongDto>({
-        ...findSongDto,
-        ...updateSongDto,
+        ...findSongDtoMock,
+        ...updateSongDtoMock,
         album: {
-          id: updateSongDto.album,
+          id: updateSongDtoMock.album,
           title: 'Fear Inoculum',
           songs: null,
         },
@@ -124,7 +113,9 @@ describe('SongsService', () => {
     it('should throw a NotFoundException if the song does not exist', () => {
       const wrongId = 'wrongId';
 
-      expect(service.updateSongById(wrongId, updateSongDto)).rejects.toThrow(
+      expect(
+        service.updateSongById(wrongId, updateSongDtoMock)
+      ).rejects.toThrow(
         new NotFoundException(`Song with id ${wrongId} not found`)
       );
     });

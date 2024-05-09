@@ -6,6 +6,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
+import { AllExceptionsResponseDto } from './dtos/all-exceptions-response.dto';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
@@ -25,12 +26,12 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     const responseMessage = exception.response?.message || exception.message;
 
-    const responseBody = {
-      statusCode: httpStatus,
-      name: exception.name,
+    const responseBody: AllExceptionsResponseDto = {
       message: responseMessage,
-      timestamp: new Date().toISOString(),
+      name: exception.name,
       path: httpAdapter.getRequestUrl(ctx.getRequest()),
+      statusCode: httpStatus,
+      timestamp: new Date().toISOString(),
     };
 
     httpAdapter.reply(ctx.getResponse(), responseBody, httpStatus);

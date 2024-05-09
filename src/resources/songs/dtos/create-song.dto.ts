@@ -26,5 +26,5 @@ export class CreateSongDto {
 
   @IsOptional()
   @IsMongoId()
-  album: string;
+  album?: string;
 }

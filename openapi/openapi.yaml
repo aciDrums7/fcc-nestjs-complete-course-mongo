@@ -2,7 +2,7 @@ openapi: 3.0.0
 paths:
   /api/v1:
     get:
-      operationId: AppController-getHello
+      operationId: getHello
       parameters: []
       responses:
         "200":
@@ -15,7 +15,8 @@ paths:
         - app
   /api/v1/songs:
     post:
-      operationId: SongsController-create
+      operationId: createSong
+      summary: Create a song
       parameters: []
       requestBody:
         required: true
@@ -25,15 +26,17 @@ paths:
               $ref: "#/components/schemas/CreateSongDto"
       responses:
         "201":
-          description: ""
+          description: The song has been created
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/FindSongDto"
+        "404":
+          description: Song not found
       tags:
         - songs
     get:
-      operationId: SongsController-findAll
+      operationId: findAllSongs
       parameters: []
       responses:
         "200":
@@ -48,7 +51,7 @@ paths:
         - songs
   /api/v1/songs/{id}:
     get:
-      operationId: SongsController-findOneById
+      operationId: findSongById
       parameters:
         - name: id
           required: true
@@ -64,8 +67,8 @@ paths:
                 $ref: "#/components/schemas/FindSongDto"
       tags:
         - songs
-    patch:
-      operationId: SongsController-update
+    put:
+      operationId: updateSongById
       parameters:
         - name: id
           required: true
@@ -88,7 +91,7 @@ paths:
       tags:
         - songs
     delete:
-      operationId: SongsController-deleteOneById
+      operationId: deleteSongById
       parameters:
         - name: id
           required: true
@@ -102,7 +105,7 @@ paths:
         - songs
   /api/v1/albums:
     post:
-      operationId: AlbumsController-create
+      operationId: createAlbum
       parameters: []
       requestBody:
         required: true
@@ -120,7 +123,7 @@ paths:
       tags:
         - albums
     get:
-      operationId: AlbumsController-findAll
+      operationId: findAllAlbums
       parameters: []
       responses:
         "200":
@@ -135,7 +138,7 @@ paths:
         - albums
   /api/v1/albums/{id}:
     get:
-      operationId: AlbumsController-findOneById
+      operationId: findAlbumById
       parameters:
         - name: id
           required: true
@@ -151,8 +154,8 @@ paths:
                 $ref: "#/components/schemas/FindAlbumDto"
       tags:
         - albums
-    patch:
-      operationId: AlbumsController-update
+    put:
+      operationId: updateAlbumById
       parameters:
         - name: id
           required: true
@@ -171,11 +174,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UpdateAlbumDto"
+                $ref: "#/components/schemas/FindAlbumDto"
       tags:
         - albums
     delete:
-      operationId: AlbumsController-remove
+      operationId: deleteAlbumById
       parameters:
         - name: id
           required: true
@@ -185,10 +188,6 @@ paths:
       responses:
         "200":
           description: ""
-          content:
-            application/json:
-              schema:
-                type: string
       tags:
         - albums
 info:
@@ -216,7 +215,6 @@ components:
           format: date-time
           type: string
         duration:
-          format: date-time
           type: string
         lyrics:
           type: string
@@ -227,7 +225,6 @@ components:
         - releasedDate
         - duration
         - lyrics
-        - album
     FindSongDto:
       type: object
       properties:
@@ -239,70 +236,13 @@ components:
           format: date-time
           type: string
         duration:
-          format: date-time
           type: string
         lyrics:
           type: string
+        album:
+          $ref: "#/components/schemas/FindAlbumDto"
       required:
         - id
-        - title
-        - releasedDate
-        - duration
-        - lyrics
-    UpdateSongDto:
-      type: object
-      properties:
-        title:
-          type: string
-        releasedDate:
-          format: date-time
-          type: string
-        duration:
-          format: date-time
-          type: string
-        lyrics:
-          type: string
-        album:
-          type: string
-    CreateAlbumDto:
-      type: object
-      properties:
-        title:
-          type: string
-        songs:
-          type: array
-          items:
-            type: string
-      required:
-        - title
-        - songs
-    Album:
-      type: object
-      properties:
-        title:
-          type: string
-        songs:
-          type: array
-          items:
-            $ref: "#/components/schemas/Song"
-      required:
-        - title
-        - songs
-    Song:
-      type: object
-      properties:
-        title:
-          type: string
-        releasedDate:
-          format: date-time
-          type: string
-        duration:
-          type: string
-        lyrics:
-          type: string
-        album:
-          $ref: "#/components/schemas/Album"
-      required:
         - title
         - releasedDate
         - duration
@@ -318,9 +258,35 @@ components:
         songs:
           type: array
           items:
-            $ref: "#/components/schemas/Song"
+            $ref: "#/components/schemas/FindSongDto"
       required:
         - id
+        - title
+        - songs
+    UpdateSongDto:
+      type: object
+      properties:
+        title:
+          type: string
+        releasedDate:
+          format: date-time
+          type: string
+        duration:
+          type: string
+        lyrics:
+          type: string
+        album:
+          type: string
+    CreateAlbumDto:
+      type: object
+      properties:
+        title:
+          type: string
+        songs:
+          type: array
+          items:
+            type: string
+      required:
         - title
         - songs
     UpdateAlbumDto:

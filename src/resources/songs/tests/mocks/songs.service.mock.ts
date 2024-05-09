@@ -4,17 +4,7 @@ import { CreateSongDto } from '../../dtos/create-song.dto';
 import { FindSongDto } from '../../dtos/find-song.dto';
 import { UpdateSongDto } from '../../dtos/update-song.dto';
 import { SongDocument } from '../../entities/song.entity';
-
-export const songId = '6637fd0ce661958a3699ece1';
-
-export const findSongDto: FindSongDto = {
-  id: songId,
-  title: 'Pneuma',
-  releasedDate: new Date('2023-05-02T00:00:00.000Z'),
-  duration: '05:45',
-  lyrics: 'Yellow',
-  album: null,
-};
+import { findSongDtoMock, songId } from './dtos/find-song.dto.mock';
 
 export const SongsServiceMock = {
   createSong: jest.fn().mockImplementation((createSongDto: CreateSongDto) =>
@@ -24,10 +14,10 @@ export const SongsServiceMock = {
       album: null,
     })
   ),
-  findAllSongs: jest.fn().mockResolvedValue([findSongDto]),
+  findAllSongs: jest.fn().mockResolvedValue([findSongDtoMock]),
   findSongById: jest.fn().mockImplementation((id: string) => {
     if (id === songId) {
-      return Promise.resolve<FindSongDto>(findSongDto);
+      return Promise.resolve<FindSongDto>(findSongDtoMock);
     }
     return Promise.reject(
       new NotFoundException(`Song with id ${id} not found`)
@@ -38,7 +28,7 @@ export const SongsServiceMock = {
     .mockImplementation((id: string, updateSongDto: UpdateSongDto) => {
       if (id === songId) {
         return Promise.resolve<FindSongDto>({
-          ...findSongDto,
+          ...findSongDtoMock,
           ...updateSongDto,
           album: {
             id: '6637bcd1aef769fc1760cd8b',

@@ -1,14 +1,11 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CreateSongDto } from '../dtos/create-song.dto';
-import { UpdateSongDto } from '../dtos/update-song.dto';
 import { SongsController } from '../songs.controller';
 import { SongsService } from '../songs.service';
-import {
-  SongsServiceMock,
-  findSongDto,
-  songId,
-} from './mocks/songs.service.mock';
-import { NotFoundException } from '@nestjs/common';
+import { createSongDtoMock } from './mocks/dtos/create-song.dto.mock';
+import { findSongDtoMock, songId } from './mocks/dtos/find-song.dto.mock';
+import { SongsServiceMock } from './mocks/songs.service.mock';
+import { updateSongDtoMock } from './mocks/dtos/update-song.dto.mock';
 
 //! https://docs.nestjs.com/fundamentals/testing
 describe('SongsController', () => {
@@ -28,22 +25,14 @@ describe('SongsController', () => {
   });
 
   describe('createSong', () => {
-    const createSongDto: CreateSongDto = {
-      title: 'Pneuma',
-      releasedDate: new Date('2023-05-02T00:00:00.000Z'),
-      duration: '05:45',
-      lyrics: 'Yellow',
-      album: '',
-    };
-
     it('should create a song and return the created song', async () => {
       const createSongSpy = jest.spyOn(controller, 'createSong');
 
-      const result = await controller.createSong(createSongDto);
+      const result = await controller.createSong(createSongDtoMock);
 
-      expect(createSongSpy).toHaveBeenCalledWith(createSongDto);
+      expect(createSongSpy).toHaveBeenCalledWith(createSongDtoMock);
       expect(createSongSpy).toHaveBeenCalledTimes(1);
-      expect(result).toEqual(findSongDto);
+      expect(result).toEqual(findSongDtoMock);
     });
   });
 
@@ -55,7 +44,7 @@ describe('SongsController', () => {
 
       expect(findAllSongsSpy).toHaveBeenCalled();
       expect(findAllSongsSpy).toHaveBeenCalledTimes(1);
-      expect(result).toEqual([findSongDto]);
+      expect(result).toEqual([findSongDtoMock]);
     });
   });
 
@@ -67,7 +56,7 @@ describe('SongsController', () => {
 
       expect(findSongByIdSpy).toHaveBeenCalledWith(songId);
       expect(findSongByIdSpy).toHaveBeenCalledTimes(1);
-      expect(result).toEqual(findSongDto);
+      expect(result).toEqual(findSongDtoMock);
     });
 
     it('should throw a NotFoundException if the song does not exist', () => {
@@ -79,20 +68,16 @@ describe('SongsController', () => {
   });
 
   describe('updateSongById', () => {
-    const updateSongDto: UpdateSongDto = {
-      lyrics: 'Test lyrics',
-      album: '6637bcd1aef769fc1760cd8b',
-    };
     it('should update a song and return it', async () => {
       const updateSongByIdSpy = jest.spyOn(controller, 'updateSongById');
 
-      const result = await controller.updateSongById(songId, updateSongDto);
+      const result = await controller.updateSongById(songId, updateSongDtoMock);
 
-      expect(updateSongByIdSpy).toHaveBeenCalledWith(songId, updateSongDto);
+      expect(updateSongByIdSpy).toHaveBeenCalledWith(songId, updateSongDtoMock);
       expect(updateSongByIdSpy).toHaveBeenCalledTimes(1);
       expect(result).toEqual({
-        ...findSongDto,
-        ...updateSongDto,
+        ...findSongDtoMock,
+        ...updateSongDtoMock,
         album: {
           id: '6637bcd1aef769fc1760cd8b',
           title: 'Fear Inoculum',
@@ -103,7 +88,9 @@ describe('SongsController', () => {
 
     it('should throw a NotFoundException if the song does not exist', () => {
       const wrongId = 'wrongId';
-      expect(controller.updateSongById(wrongId, updateSongDto)).rejects.toThrow(
+      expect(
+        controller.updateSongById(wrongId, updateSongDtoMock)
+      ).rejects.toThrow(
         new NotFoundException(`Song with id ${wrongId} not found`)
       );
     });

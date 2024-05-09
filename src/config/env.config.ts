@@ -11,6 +11,7 @@ export const envConfig = () => ({
     url:
       process.env.DB_URL ||
       'mongodb://mongo:mongo@localhost:27017/spotify-clone?authSource=admin',
+    name: process.env.DB_NAME || 'spotify-clone',
   },
   openapiPath: process.env.OPENAPI_PATH || './openapi',
   tsPostProcessFile:
